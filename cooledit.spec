@@ -4,7 +4,6 @@
 
 Summary: 	Full featured multiple window programmer's text editor
 Name: 		cooledit
-Icon: 		cooledit.xpm
 Version: 	3.17.17
 Release: 	%mkrel 2
 License: 	GPL
