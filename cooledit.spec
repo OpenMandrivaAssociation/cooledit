@@ -79,7 +79,6 @@ chmod 0644 %buildroot/%{_menudir}/%{name}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop << EOF
 [Desktop Entry]
-Encoding=UTF-8
 Name=CoolEdit
 Comment=Programmer's text editor with Python and shell scripting hooks
 Exec=%{_bindir}/%{name}
