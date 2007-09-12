@@ -82,7 +82,7 @@ cat > $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop << EOF
 Name=CoolEdit
 Comment=Programmer's text editor with Python and shell scripting hooks
 Exec=%{_bindir}/%{name}
-Icon=editors_section.png
+Icon=editors_section
 Terminal=false
 Type=Application
 StartupNotify=true
