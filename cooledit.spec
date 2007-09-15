@@ -63,7 +63,7 @@ rm -fr %buildroot
 %makeinstall
 %find_lang %{name}
 
-# Mandrake menu entries
+# Mandriva menu entries
 mkdir -p $RPM_BUILD_ROOT%{_menudir}
 cat > $RPM_BUILD_ROOT%{_menudir}/%{name} << EOF
 ?package(%{name}): \
