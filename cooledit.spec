@@ -9,7 +9,7 @@ Release: 	%mkrel 2
 License: 	GPL
 Group: 		Editors
 Requires: 	python %lib_name = %version
-BuildRequires:	XFree86-devel xpm-devel
+BuildRequires:	X11-devel xpm-devel
 
 Source: 	ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/%{name}/%{name}-%{version}.tar.bz2
 Source1:	%{name}_48x48.xpm
