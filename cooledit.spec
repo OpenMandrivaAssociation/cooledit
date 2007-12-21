@@ -16,6 +16,7 @@ Source1:	%{name}_48x48.xpm
 
 Patch0:         cooledit-gcc4.patch
 
+BuildRoot: 	%_tmppath/%name-%version-%release-root
 URL: 		ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/cooledit/
 
 %description 
