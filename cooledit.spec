@@ -64,17 +64,6 @@ rm -fr %buildroot
 %find_lang %{name}
 
 # Mandriva menu entries
-mkdir -p $RPM_BUILD_ROOT%{_menudir}
-cat > $RPM_BUILD_ROOT%{_menudir}/%{name} << EOF
-?package(%{name}): \
-command="%{name}" \
-icon="editors_section.png" \
-needs="x11" title="CoolEdit" \
-longtitle="Powerful programmer's text editor with Python and shell scripting hooks" \
-section="More Applications/Editors" \
-xdg="true"
-EOF
-chmod 0644 %buildroot/%{_menudir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop << EOF
@@ -115,7 +104,6 @@ rm -fr %buildroot
 %_datadir/cooledit/*
 %_bindir/*
 %_mandir/man1/*
-%_menudir/%{name}
 %{_datadir}/applications/%{name}.desktop
 
 %files -n %lib_name
