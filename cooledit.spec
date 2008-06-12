@@ -81,11 +81,15 @@ EOF
 # (sb) installed but unpackaged files
 rm -f $RPM_BUILD_ROOT/usr/share/locale/locale.alias
 
+%if %mdkversion < 200900
 %post
 %update_menus
+%endif
 
+%if %mdkversion < 200900
 %postun
 %clean_menus
+%endif
 
 %if %mdkversion < 200900
 %post -n %lib_name -p /sbin/ldconfig
