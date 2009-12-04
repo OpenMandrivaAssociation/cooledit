@@ -6,7 +6,7 @@ Summary: 	Full featured multiple window programmer's text editor
 Name: 		cooledit
 Version: 	3.17.17
 Release: 	%mkrel 5
-License: 	GPL
+License: 	GPLv2+
 Group: 		Editors
 Requires: 	python %lib_name = %version
 BuildRequires:	X11-devel xpm-devel
@@ -15,6 +15,8 @@ Source: 	ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/%{name}/%{name}-%{versio
 Source1:	%{name}_48x48.xpm
 
 Patch0:         cooledit-gcc4.patch
+Patch1:		cooledit-3.17.17-mdv-fix-str-fmt.patch
+Patch2:		cooledit-3.17.17-mdv-fix-underlinking.patch
 
 BuildRoot: 	%_tmppath/%name-%version-%release-root
 URL: 		ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/cooledit/
@@ -48,11 +50,13 @@ Files for development from the cooledit package.
 
 
 %prep
-
 %setup -q -n %{name}-%{version}
 %patch0 -p1
+%patch1 -p1 -b .strfmt
+%patch2 -p1 -b .undlnk
 
 %build
+autoreconf -f -i
 %configure --program-prefix=''
 %make
 
