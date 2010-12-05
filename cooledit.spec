@@ -5,7 +5,7 @@
 Summary: 	Full featured multiple window programmer's text editor
 Name: 		cooledit
 Version: 	3.17.17
-Release: 	%mkrel 5
+Release: 	%mkrel 6
 License: 	GPLv2+
 Group: 		Editors
 Requires: 	python %lib_name = %version
