@@ -1,23 +1,22 @@
 %define lib_major		1
 %define lib_name %mklibname Cw %lib_major
+%define develname %mklibname -d Cw
 %define lib_name_orig libCw
 
 Summary: 	Full featured multiple window programmer's text editor
 Name: 		cooledit
 Version: 	3.17.17
-Release: 	%mkrel 6
+Release: 	%mkrel 7
 License: 	GPLv2+
 Group: 		Editors
-Requires: 	python %lib_name = %version
-BuildRequires:	X11-devel xpm-devel
-
+BuildRequires:	libx11-devel
+BuildRequires:	libxt-devel
+BuildRequires:	gettext-devel
 Source: 	ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/%{name}/%{name}-%{version}.tar.bz2
 Source1:	%{name}_48x48.xpm
-
 Patch0:         cooledit-gcc4.patch
 Patch1:		cooledit-3.17.17-mdv-fix-str-fmt.patch
 Patch2:		cooledit-3.17.17-mdv-fix-underlinking.patch
-
 BuildRoot: 	%_tmppath/%name-%version-%release-root
 URL: 		ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/cooledit/
 
@@ -39,15 +38,16 @@ Summary:        Shared library files for cooledit
 %description -n %lib_name
 Shared library files for cooledit.
 
-%package -n %lib_name-devel
+%package -n %develname
 Group:          Development/C
 Summary:        Development files for cooledit
-Requires(pre):  %name = %version-%release, %lib_name = %version-%release
-Provides:       %lib_name_orig-devel
+Requires:	%name = %version-%release
+Requires:	%lib_name = %version-%release
+Provides:	%{name}-devel = %version-%release
+Obsoletes:	%{_lib}Cw1-devel
 
-%description -n %lib_name-devel
+%description -n %develname
 Files for development from the cooledit package.
-
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -57,14 +57,13 @@ Files for development from the cooledit package.
 
 %build
 autoreconf -f -i
-%configure --program-prefix=''
+%configure2_5x --program-prefix='' --disable-static
 %make
-
 
 %install
 rm -fr %buildroot
+%makeinstall_std
 
-%makeinstall
 %find_lang %{name}
 
 # Mandriva menu entries
@@ -79,11 +78,8 @@ Icon=editors_section
 Terminal=false
 Type=Application
 StartupNotify=true
-Categories=X-MandrivaLinux-MoreApplications-Editors;TextEditor;
+Categories=TextEditor;Utility;
 EOF
-
-# (sb) installed but unpackaged files
-rm -f $RPM_BUILD_ROOT/usr/share/locale/locale.alias
 
 %if %mdkversion < 200900
 %post
@@ -120,12 +116,10 @@ rm -fr %buildroot
 
 %files -n %lib_name
 %defattr(-,root,root)
-%_libdir/*.so.*
+%_libdir/*.so.%lib_major
+%_libdir/*.so.%lib_major.*
 
-%files -n %lib_name-devel
+%files -n %develname
 %defattr(-,root,root)
-%_libdir/*.a
 %_libdir/*.so
 %_libdir/*.la
-
-
