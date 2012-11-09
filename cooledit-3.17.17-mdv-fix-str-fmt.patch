@@ -1,0 +1,24 @@
+diff -p -up cooledit-3.17.17/editor/cooledit.c.strfmt cooledit-3.17.17/editor/cooledit.c
+--- cooledit-3.17.17/editor/cooledit.c.strfmt	2009-12-04 23:23:09.000000000 +0100
++++ cooledit-3.17.17/editor/cooledit.c	2009-12-04 23:23:38.000000000 +0100
+@@ -1511,7 +1511,7 @@ int write_config (int clean)
+ 	    current_edit++;
+ 	}
+ 	if (*s) {
+-	    sprintf (f, s);
++	    sprintf (f, "%s", s);
+ 	    f += strlen (s);
+ 	    *f = 0;
+ 	}
+diff -p -up cooledit-3.17.17/widget/editcmd.c.strfmt cooledit-3.17.17/widget/editcmd.c
+--- cooledit-3.17.17/widget/editcmd.c.strfmt	2005-04-04 22:47:45.000000000 +0200
++++ cooledit-3.17.17/widget/editcmd.c	2009-12-04 23:22:29.000000000 +0100
+@@ -1914,7 +1914,7 @@ int sprintf_p (char *str, const char *fm
+ 	q = p;
+     }
+     va_end (ap);
+-    sprintf (s, q);		/* print trailing leftover */
++    sprintf (s, "%s", q);		/* print trailing leftover */
+     return (unsigned long) s - (unsigned long) str + strlen (s);
+ }
+ 
