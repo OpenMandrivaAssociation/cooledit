@@ -1,24 +1,22 @@
-%define lib_major		1
-%define lib_name %mklibname Cw %lib_major
+%define major		1
+%define libname %mklibname Cw %{major}
 %define develname %mklibname -d Cw
-%define lib_name_orig libCw
 
-Summary: 	Full featured multiple window programmer's text editor
-Name: 		cooledit
-Version: 	3.17.17
-Release: 	%mkrel 7
-License: 	GPLv2+
-Group: 		Editors
-BuildRequires:	libx11-devel
-BuildRequires:	libxt-devel
+Summary:	Full featured multiple window programmer's text editor
+Name:		cooledit
+Version:	3.17.17
+Release:	8
+License:	GPLv2+
+Group:		Editors
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xt)
 BuildRequires:	gettext-devel
-Source: 	ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/%{name}/%{name}-%{version}.tar.bz2
+URL:		ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/cooledit/
+Source0:	ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/%{name}/%{name}-%{version}.tar.bz2
 Source1:	%{name}_48x48.xpm
-Patch0:         cooledit-gcc4.patch
+Patch0:		cooledit-gcc4.patch
 Patch1:		cooledit-3.17.17-mdv-fix-str-fmt.patch
 Patch2:		cooledit-3.17.17-mdv-fix-underlinking.patch
-BuildRoot: 	%_tmppath/%name-%version-%release-root
-URL: 		ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/cooledit/
 
 %description 
 Full-featured X Window text editor; multiple edit windows; 3D Motif-ish
@@ -31,45 +29,43 @@ and drop; interactive man page browser; run make and other shell
 commands with seamless shell interface; redefine keys with an easy
 interactive key learner; full support for proportional fonts;
 
-%package -n %lib_name
-Group:          Editors
-Summary:        Shared library files for cooledit
+%package -n %{libname}
+Group:		Editors
+Summary:	Shared library files for cooledit
 
-%description -n %lib_name
+%description -n %{libname}
 Shared library files for cooledit.
 
-%package -n %develname
-Group:          Development/C
-Summary:        Development files for cooledit
-Requires:	%name = %version-%release
-Requires:	%lib_name = %version-%release
-Provides:	%{name}-devel = %version-%release
-Obsoletes:	%{_lib}Cw1-devel
+%package -n %{develname}
+Group:		Development/C
+Summary:	Development files for cooledit
+Requires:	%{name} = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
+Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n %develname
+%description -n %{develname}
 Files for development from the cooledit package.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 %patch0 -p1
 %patch1 -p1 -b .strfmt
 %patch2 -p1 -b .undlnk
 
 %build
-autoreconf -f -i
+autoreconf -fi
 %configure2_5x --program-prefix='' --disable-static
 %make
 
 %install
-rm -fr %buildroot
 %makeinstall_std
 
 %find_lang %{name}
 
 # Mandriva menu entries
 
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-cat > $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop << EOF
+mkdir -p %{buildroot}%{_datadir}/applications
+cat > %{buildroot}%{_datadir}/applications/%{name}.desktop << EOF
 [Desktop Entry]
 Name=CoolEdit
 Comment=Programmer's text editor with Python and shell scripting hooks
@@ -81,45 +77,87 @@ StartupNotify=true
 Categories=TextEditor;Utility;
 EOF
 
-%if %mdkversion < 200900
-%post
-%update_menus
-%endif
-
-%if %mdkversion < 200900
-%postun
-%clean_menus
-%endif
-
-%if %mdkversion < 200900
-%post -n %lib_name -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %lib_name -p /sbin/ldconfig
-%endif
-
-%clean
-rm -fr %buildroot
-
 %files -f %{name}.lang
-%defattr (-,root,root)
 %doc ABOUT-NLS AUTHORS BUGS COPYING FAQ INSTALL INTERNATIONAL HINTS
 %doc NEWS README TODO VERSION ChangeLog
 %doc cooledit.lsm cooledit.spec
 %doc cooledit_16x16.xpm cooledit_32x32.xpm rxvt/README.rxvt
-%dir %_datadir/cooledit/
-%_datadir/cooledit/*
-%_bindir/*
-%_mandir/man1/*
+%dir %{_datadir}/cooledit/
+%{_datadir}/cooledit/*
+%{_bindir}/*
+%{_mandir}/man1/*
 %{_datadir}/applications/%{name}.desktop
 
-%files -n %lib_name
-%defattr(-,root,root)
-%_libdir/*.so.%lib_major
-%_libdir/*.so.%lib_major.*
+%files -n %{libname}
+%{_libdir}/*.so.%{major}*
 
-%files -n %develname
-%defattr(-,root,root)
-%_libdir/*.so
-%_libdir/*.la
+%files -n %{develname}
+%{_libdir}/*.so
+
+
+%changelog
+* Wed Feb 02 2011 Funda Wang <fwang@mandriva.org> 3.17.17-7mdv2011.0
++ Revision: 635148
+- new devel package policy
+
+* Sun Dec 05 2010 Oden Eriksson <oeriksson@mandriva.com> 3.17.17-6mdv2011.0
++ Revision: 610160
+- rebuild
+
+* Fri Dec 04 2009 JÃ©rÃ´me Brenier <incubusss@mandriva.org> 3.17.17-5mdv2010.1
++ Revision: 473630
+- fix str fmt
+- fix underlinking
+- fix license tag
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+    - rebuild
+    - drop old menu
+
+  + Pixel <pixel@mandriva.com>
+    - rpm filetriggers deprecates update_menus/update_scrollkeeper/update_mime_database/update_icon_cache/update_desktop_database/post_install_gconf_schemas
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Fri Dec 21 2007 Olivier Blin <oblin@mandriva.com> 3.17.17-2mdv2008.1
++ Revision: 136345
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+    - buildrequires X11-devel instead of XFree86-devel
+    - s/Mandrake/Mandriva/
+    - kill hardcoded icon extension
+    - kill desktop-file-validate's 'warning: key "Encoding" in group "Desktop Entry" is deprecated'
+    - kill icon tag
+
+
+* Fri Jan 05 2007 Stew Benedict <sbenedict@mandriva.com> 3.17.17-2mdv2007.0
++ Revision: 104600
+- Import cooledit
+
+* Fri Jan 05 2007 Stew Benedict <sbenedict@mandriva.com> 3.17.17-2mdv2007.1
+- rebuild for new python
+
+* Fri Aug 25 2006 Stew Benedict <sbenedict@mandriva.com> 3.17.17-1mdv2007.0
+- 3.17.17, xdg menu
+
+* Tue Apr 11 2006 Michael Scherer <misc@mandriva.org> 3.17.14-4mdk
+- remove pythonlib wrong requires
+
+* Sat Dec 31 2005 Mandriva Linux Team <http://www.mandrivaexpert.com/> 3.17.14-3mdk
+- Rebuild
+
+* Fri Aug 12 2005 Nicolas Lécureuil <neoclust@mandriva.org> 3.17.14-2mdk
+- fix rpmlint errors (PreReq) 
+- fix build with gcc4 ( P1 )
+
+* Tue May 03 2005 Stew Benedict <sbenedict@mandriva.com> 3.17.14-1mdk
+- 3.17.14, update URL, drop coolicon stuff
+
+* Sun Dec 05 2004 Michael Scherer <misc@mandrake.org> 3.17.7-8mdk
+- Rebuild for new  python
+
+* Mon Sep 06 2004 Stew Benedict <sbenedict@mandrakesoft.com> 3.17.7-7mdk
+- rebuild
+
