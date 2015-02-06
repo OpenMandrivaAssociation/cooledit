@@ -5,7 +5,7 @@
 Summary:	Full featured multiple window programmer's text editor
 Name:		cooledit
 Version:	3.17.17
-Release:	8
+Release:	9
 License:	GPLv2+
 Group:		Editors
 BuildRequires:	pkgconfig(x11)
