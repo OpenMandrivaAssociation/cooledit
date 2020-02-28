@@ -4,19 +4,21 @@
 
 Summary:	Full featured multiple window programmer's text editor
 Name:		cooledit
-Version:	3.17.17
-Release:	9
+Version:	4.0.0
+Release:	1
 License:	GPLv2+
 Group:		Editors
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	gettext-devel
+BuildRequires:	pkgconfig(freetype2)
+
 URL:		ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/cooledit/
 Source0:	ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/%{name}/%{name}-%{version}.tar.bz2
 Source1:	%{name}_48x48.xpm
-Patch0:		cooledit-gcc4.patch
 Patch1:		cooledit-3.17.17-mdv-fix-str-fmt.patch
-Patch2:		cooledit-3.17.17-mdv-fix-underlinking.patch
+Patch2:		cooledit-4.0.0-linking.patch
+Patch3:		cooledit-4.0.0-python3.patch
 
 %description 
 Full-featured X Window text editor; multiple edit windows; 3D Motif-ish
@@ -48,19 +50,15 @@ Files for development from the cooledit package.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1 -b .strfmt
-%patch2 -p1 -b .undlnk
+%autopatch -p1
 
 %build
 autoreconf -fi
-%configure2_5x --program-prefix='' --disable-static
-%make
+%configure --program-prefix='' --disable-static
+%make_build
 
 %install
-%makeinstall_std
-
-%find_lang %{name}
+%make_install
 
 # Mandriva menu entries
 
@@ -77,15 +75,13 @@ StartupNotify=true
 Categories=TextEditor;Utility;
 EOF
 
-%files -f %{name}.lang
-%doc ABOUT-NLS AUTHORS BUGS COPYING FAQ INSTALL INTERNATIONAL HINTS
-%doc NEWS README TODO VERSION ChangeLog
-%doc cooledit.lsm cooledit.spec
+%files
+%doc AUTHORS NEWS README TODO VERSION
 %doc cooledit_16x16.xpm cooledit_32x32.xpm rxvt/README.rxvt
-%dir %{_datadir}/cooledit/
-%{_datadir}/cooledit/*
-%{_bindir}/*
-%{_mandir}/man1/*
+%license COPYING
+%_bindir/*
+%_datadir/cooledit/
+%_mandir/man1/*
 %{_datadir}/applications/%{name}.desktop
 
 %files -n %{libname}
