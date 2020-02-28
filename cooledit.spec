@@ -60,8 +60,6 @@ autoreconf -fi
 %install
 %make_install
 
-%find_lang %{name}
-
 # Mandriva menu entries
 
 mkdir -p %{buildroot}%{_datadir}/applications
@@ -77,7 +75,7 @@ StartupNotify=true
 Categories=TextEditor;Utility;
 EOF
 
-%files -f %{name}.lang
+%files
 %doc ABOUT-NLS AUTHORS BUGS COPYING FAQ INSTALL INTERNATIONAL HINTS
 %doc NEWS README TODO VERSION ChangeLog
 %doc cooledit.lsm cooledit.spec
