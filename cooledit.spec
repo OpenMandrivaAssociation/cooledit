@@ -4,13 +4,15 @@
 
 Summary:	Full featured multiple window programmer's text editor
 Name:		cooledit
-Version:	3.17.17
-Release:	9
+Version:	4.0.0
+Release:	1
 License:	GPLv2+
 Group:		Editors
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	gettext-devel
+BuildRequires:	pkgconfig(freetype2)
+
 URL:		ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/cooledit/
 Source0:	ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/%{name}/%{name}-%{version}.tar.bz2
 Source1:	%{name}_48x48.xpm
