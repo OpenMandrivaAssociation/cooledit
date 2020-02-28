@@ -16,7 +16,6 @@ BuildRequires:	pkgconfig(freetype2)
 URL:		ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/cooledit/
 Source0:	ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/%{name}/%{name}-%{version}.tar.bz2
 Source1:	%{name}_48x48.xpm
-Patch0:		cooledit-gcc4.patch
 Patch1:		cooledit-3.17.17-mdv-fix-str-fmt.patch
 Patch2:		cooledit-3.17.17-mdv-fix-underlinking.patch
 
@@ -50,7 +49,6 @@ Files for development from the cooledit package.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch1 -p1 -b .strfmt
 %patch2 -p1 -b .undlnk
 
