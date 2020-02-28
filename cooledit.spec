@@ -17,7 +17,6 @@ URL:		ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/cooledit/
 Source0:	ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/%{name}/%{name}-%{version}.tar.bz2
 Source1:	%{name}_48x48.xpm
 Patch1:		cooledit-3.17.17-mdv-fix-str-fmt.patch
-Patch2:		cooledit-3.17.17-mdv-fix-underlinking.patch
 
 %description 
 Full-featured X Window text editor; multiple edit windows; 3D Motif-ish
@@ -50,7 +49,6 @@ Files for development from the cooledit package.
 %prep
 %setup -q
 %patch1 -p1 -b .strfmt
-%patch2 -p1 -b .undlnk
 
 %build
 autoreconf -fi
