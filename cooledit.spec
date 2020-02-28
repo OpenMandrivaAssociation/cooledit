@@ -17,6 +17,8 @@ URL:		ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/cooledit/
 Source0:	ftp://ftp.ibiblio.org/pub/Linux/apps/editors/X/%{name}/%{name}-%{version}.tar.bz2
 Source1:	%{name}_48x48.xpm
 Patch1:		cooledit-3.17.17-mdv-fix-str-fmt.patch
+Patch2:		cooledit-4.0.0-linking.patch
+Patch3:		cooledit-4.0.0-python3.patch
 
 %description 
 Full-featured X Window text editor; multiple edit windows; 3D Motif-ish
@@ -48,15 +50,15 @@ Files for development from the cooledit package.
 
 %prep
 %setup -q
-%patch1 -p1 -b .strfmt
+%autopatch -p1
 
 %build
 autoreconf -fi
-%configure2_5x --program-prefix='' --disable-static
-%make
+%configure --program-prefix='' --disable-static
+%make_build
 
 %install
-%makeinstall_std
+%make_install
 
 %find_lang %{name}
 
