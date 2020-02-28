@@ -1,0 +1,23 @@
+diff -Nrup a/widget/Makefile.am b/widget/Makefile.am
+--- a/widget/Makefile.am	2019-12-16 23:08:52.000000000 +0100
++++ b/widget/Makefile.am	2020-02-27 18:00:21.530204414 +0100
+@@ -21,5 +21,7 @@ libCw_la_SOURCES = initapp.c coolwidget.
+ 
+ libCw_la_LDFLAGS = -version-info 1:0:0
+ 
++libCw_la_LIBADD = -lX11
++
+ DEFS = @X_CFLAGS@ -DLOCALEDIR=\"$(localedir)\" -DLIBDIR=\"${exec_prefix}/share/cooledit\" @DEFS@ 
+ 
+diff -Nrup a/widget/Makefile.in b/widget/Makefile.in
+--- a/widget/Makefile.in	2019-12-17 00:25:21.000000000 +0100
++++ b/widget/Makefile.in	2020-02-27 18:00:46.482406679 +0100
+@@ -131,7 +131,7 @@ am__uninstall_files_from_dir = { \
+   }
+ am__installdirs = "$(DESTDIR)$(libdir)"
+ LTLIBRARIES = $(lib_LTLIBRARIES)
+-libCw_la_LIBADD =
++libCw_la_LIBADD = -lX11
+ am_libCw_la_OBJECTS = initapp.lo coolwidget.lo dirtools.lo menu.lo \
+ 	mathfuncs.lo filebrowser.lo coolnext.lo bitmapbutton.lo \
+ 	pixmap.lo dialog.lo disable.lo focus.lo xdnd.lo ClientWin.lo \
