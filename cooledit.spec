@@ -76,14 +76,12 @@ Categories=TextEditor;Utility;
 EOF
 
 %files
-%doc ABOUT-NLS AUTHORS BUGS COPYING FAQ INSTALL INTERNATIONAL HINTS
-%doc NEWS README TODO VERSION ChangeLog
-%doc cooledit.lsm cooledit.spec
+%doc AUTHORS NEWS README TODO VERSION
 %doc cooledit_16x16.xpm cooledit_32x32.xpm rxvt/README.rxvt
-%dir %{_datadir}/cooledit/
-%{_datadir}/cooledit/*
-%{_bindir}/*
-%{_mandir}/man1/*
+%license COPYING
+%_bindir/*
+%_datadir/cooledit/
+%_mandir/man1/*
 %{_datadir}/applications/%{name}.desktop
 
 %files -n %{libname}
