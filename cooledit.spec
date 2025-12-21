@@ -8,6 +8,11 @@ Version:	4.0.0
 Release:	1
 License:	GPLv2+
 Group:		Editors
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	gettext-devel
